@@ -19,9 +19,18 @@ io.on('connection', (socket) => {
     });
   });
 
+io.on('connection', (socket) => {
+socket.broadcast.emit('hi');
+});
 
-  io.emit('some event', { someProperty: 'some value', otherProperty: 'other value' }); // This will emit the event to all connected sockets
+io.on('connection', (socket) => {
+    socket.on('chat message', (msg) => {
+      io.emit('chat message', msg);
+    });
+  });
+io.emit('some event', { someProperty: 'some value', otherProperty: 'other value' }); // This will emit the event to all connected sockets
 
+  
 server.listen(3000, () => {
   console.log('listening on *:3000');
 });
