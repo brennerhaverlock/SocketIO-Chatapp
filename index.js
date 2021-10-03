@@ -9,6 +9,22 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+io.on('connection', function(socket){
+
+    console.log('Yay, connection was recorded')
+
+    //emit message to all front-end clients
+    io.emit('chat message', 'A user has connected');
+
+    //handling disconnects
+    socket.on('disconnect', function() {
+       io.emit('chat message', 'some user disconnected');
+    });
+
+});
+
+
+
 io.on('connection', (socket) => {
   console.log('a user connected');
 });
